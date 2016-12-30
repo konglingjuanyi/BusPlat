@@ -1,8 +1,6 @@
 package de.codecentric.batch;
 
 import lombok.extern.slf4j.Slf4j;
-
-
 import org.slf4j.MDC;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,16 +14,15 @@ import java.util.UUID;
 @SpringBootApplication
 public class Application {
 
-    @Scheduled(fixedRate = 1000)
-    public void print(){
-      log.info("testinfo");
-
-        MDC.put("traceId", UUID.randomUUID().toString());
-        log.info("trace info");
-        MDC.clear();
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(Application.class, args);
     }
 
-	public static void main(String[] args) throws Exception {
-        SpringApplication.run(Application.class, args);
+    @Scheduled(fixedRate = 1000)
+    public void print() {
+        log.info("testinfo");
+        MDC.put("traceId", UUID.randomUUID().toString());
+        log.info("mdc trace info");
+        MDC.clear();
     }
 }

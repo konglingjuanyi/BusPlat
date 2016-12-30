@@ -1,4 +1,3 @@
-import com.zhiyin.elk.boot.autoconfig.LogAppenderUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.MDC;
 import org.junit.Test;
@@ -14,8 +13,8 @@ public class LogstashTest {
 
     @Test
     public void genFileAppender() {
-        MDC.put("traceId","trace-id-100");
-        LogAppenderUtil.addFileAppender("gen-file");
+        MDC.put("traceId", "trace-id-100");
+//        LogAppenderUtil.addFileAppender("gen-file");
         log.info("gen file.");
     }
 

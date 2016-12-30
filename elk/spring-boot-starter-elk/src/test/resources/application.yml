@@ -1,0 +1,4 @@
+
+elk:
+  logstash:
+    checkMdcFields: traceId

@@ -38,16 +38,16 @@
     <appender name="TCP" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <destination>123.57.230.238:5000</destination>
         <!-- encoder is required -->
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
     </appender>
     <root level="INFO">
         <!--<appender-ref ref="CONSOLE" />-->
         <!-- Methode 1-->
         <!--<appender-ref ref="FILE" />-->
         <!-- Methode 2 -->
-        <appender-ref ref="JSON" />
+        <appender-ref ref="JSON"/>
         <!-- Methode 3-->
-        <appender-ref ref="TCP" />
+        <appender-ref ref="TCP"/>
     </root>
     <logger name="org.springframework" level="INFO"/>
 </configuration>
