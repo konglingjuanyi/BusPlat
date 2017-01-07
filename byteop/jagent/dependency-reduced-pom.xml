@@ -43,12 +43,44 @@
                   <shadedPattern>com.zhiyin.jagent.javassist</shadedPattern>
                 </relocation>
                 <relocation>
+                  <pattern>net.bytebuddy</pattern>
+                  <shadedPattern>com.zhiyin.jagent.bytebuddy</shadedPattern>
+                </relocation>
+                <relocation>
                   <pattern>com.fasterxml</pattern>
                   <shadedPattern>com.zhiyin.jagent.fasterxml</shadedPattern>
                 </relocation>
                 <relocation>
                   <pattern>com.google</pattern>
                   <shadedPattern>com.zhiyin.jagent.google</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>javax.annotation</pattern>
+                  <shadedPattern>com.zhiyin.jagent.javax</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>net.bytebuddy</pattern>
+                  <shadedPattern>com.zhiyin.jagent.bytebuddy</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>org.objectweb.asm</pattern>
+                  <shadedPattern>com.zhiyin.jagent.asm</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>net.jcip</pattern>
+                  <shadedPattern>com.zhiyin.jagent.jcip</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>edu.umd</pattern>
+                  <shadedPattern>com.zhiyin.jagent.edu</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>org.reflections</pattern>
+                  <shadedPattern>com.zhiyin.jagent.reflections</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>lombok</pattern>
+                  <shadedPattern>com.zhiyin.jagent.lombok</shadedPattern>
                 </relocation>
               </relocations>
             </configuration>

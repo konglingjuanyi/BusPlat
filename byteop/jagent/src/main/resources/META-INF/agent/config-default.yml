@@ -1,3 +1,4 @@
 
 handlers:
--LogbackTraceLoggerHandler
+  - LogbackTraceLoggerHandler
+  - PerfMonitorHandler

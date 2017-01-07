@@ -26,6 +26,11 @@
 
 	<!-- 依赖项定义 -->
 	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.8</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.sun</groupId>

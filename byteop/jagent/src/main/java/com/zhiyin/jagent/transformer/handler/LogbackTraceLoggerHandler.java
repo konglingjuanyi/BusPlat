@@ -1,12 +1,14 @@
 package com.zhiyin.jagent.transformer.handler;
 
 import javassist.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+@Slf4j
 public class LogbackTraceLoggerHandler extends SubTypeInstrumentationHandler {
     public static String LogbackLogger = "ch.qos.logback.classic.Logger";
     public static String methodName= "buildLoggingEventAndAppend";
@@ -16,7 +18,7 @@ public class LogbackTraceLoggerHandler extends SubTypeInstrumentationHandler {
 
     protected boolean transform(CtClass cc, ClassPool pool) throws NotFoundException, CannotCompileException, IOException {
 
-        System.out.println("proce logback");
+        log.info("proce logback");
 
         CtMethod serviceMethod;
         try {

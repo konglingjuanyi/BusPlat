@@ -12,7 +12,7 @@ public class ScanAllAgents {
 
 	static {
 		Reflections reflections = new Reflections(
-				"com.zhiyin");
+				"com.zhiyin.jagent");
 
 		Set<Class<? extends AgentCreator>> subTypes = reflections
 				.getSubTypesOf(AgentCreator.class);

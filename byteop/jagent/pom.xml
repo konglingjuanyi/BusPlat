@@ -31,12 +31,32 @@
 	<!-- 依赖项定义 -->
 	<dependencies>
 
-		<!--<dependency>-->
-			<!--<groupId>com.google.guava</groupId>-->
-			<!--<artifactId>guava</artifactId>-->
-			<!--<version>${guava.version}</version>-->
-			<!--<scope>provided</scope>-->
-		<!--</dependency>-->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.21</version>
+		</dependency>
+
+		<!-- 命令行解析 -->
+        <dependency>
+            <groupId>com.beust</groupId>
+            <artifactId>jcommander</artifactId>
+            <version>1.48</version>
+        </dependency>
+
+        <dependency>
+            <groupId>args4j</groupId>
+            <artifactId>args4j</artifactId>
+            <version>2.33</version>
+        </dependency>
+		<!-- end command -->
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.8</version>
+        </dependency>
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -62,32 +82,40 @@
 		</dependency>
 
 
-		<dependency>
-			<groupId>asm</groupId>
-			<artifactId>asm-all</artifactId>
-			<version>3.3.1</version>
-		</dependency>
 		<!--<dependency>-->
-			<!--<groupId>org.ow2.asm</groupId>-->
-			<!--<artifactId>asm</artifactId>-->
-			<!--<version>4.0</version>-->
+			<!--<groupId>asm</groupId>-->
+			<!--<artifactId>asm-all</artifactId>-->
+			<!--<version>3.3.1</version>-->
 		<!--</dependency>-->
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm-all</artifactId>
+            <version>5.1</version>
+        </dependency>
 
-		<dependency>
+        <dependency>
 			<groupId>net.bytebuddy</groupId>
 			<artifactId>byte-buddy</artifactId>
 			<version>1.5.2</version>
 		</dependency>
+
 		<!--<dependency>-->
 			<!--<groupId>ch.qos.logback</groupId>-->
 			<!--<artifactId>logback-classic</artifactId>-->
 			<!--<version>1.1.7</version>-->
 		<!--</dependency>-->
+
 		<dependency>
 			<groupId>org.reflections</groupId>
 			<artifactId>reflections</artifactId>
 			<version>0.9.10</version>
 		</dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>transmittable-thread-local</artifactId>
+            <version>2.1.0</version>
+        </dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -174,6 +202,12 @@
 									<shadedPattern>com.zhiyin.jagent.javassist</shadedPattern>
 								</relocation>
 
+
+                                <relocation>
+                                    <pattern>net.bytebuddy</pattern>
+                                    <shadedPattern>com.zhiyin.jagent.bytebuddy</shadedPattern>
+                                </relocation>
+
 								<relocation>
 									<pattern>com.fasterxml</pattern>
 									<shadedPattern>com.zhiyin.jagent.fasterxml</shadedPattern>
@@ -184,8 +218,36 @@
 									<shadedPattern>com.zhiyin.jagent.google</shadedPattern>
 								</relocation>
 
+                                <relocation>
+                                    <pattern>javax.annotation</pattern>
+                                    <shadedPattern>com.zhiyin.jagent.javax</shadedPattern>
+                                </relocation>
 
-							</relocations>
+                                <relocation>
+                                    <pattern>net.bytebuddy</pattern>
+                                    <shadedPattern>com.zhiyin.jagent.bytebuddy</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.objectweb.asm</pattern>
+                                    <shadedPattern>com.zhiyin.jagent.asm</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>net.jcip</pattern>
+                                    <shadedPattern>com.zhiyin.jagent.jcip</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>edu.umd</pattern>
+                                    <shadedPattern>com.zhiyin.jagent.edu</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.reflections</pattern>
+                                    <shadedPattern>com.zhiyin.jagent.reflections</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>lombok</pattern>
+                                    <shadedPattern>com.zhiyin.jagent.lombok</shadedPattern>
+                                </relocation>
+                            </relocations>
 						</configuration>
 					</execution>
 				</executions>

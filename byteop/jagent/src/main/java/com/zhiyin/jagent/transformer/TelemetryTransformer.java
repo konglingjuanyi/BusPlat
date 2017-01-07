@@ -6,6 +6,7 @@ import javassist.ByteArrayClassPath;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.LoaderClassPath;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
@@ -14,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 public class TelemetryTransformer implements ClassFileTransformer {
     private final Set<ClassInstrumentationHandler> handlers = new HashSet<>();
 
@@ -28,6 +30,7 @@ public class TelemetryTransformer implements ClassFileTransformer {
                 continue;
             }
             handlers.add(clasz);
+            log.info("add transformer, class name: {}",clasz.getClass().getName());
         }
 
     }

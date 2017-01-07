@@ -1,4 +1,4 @@
-package com.zhiyin.jagent.runner;
+package com.zhiyin.test.runner;
 
 import org.junit.Test;
 

@@ -4,12 +4,12 @@ import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.NotFoundException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
+@Slf4j
 public abstract class SubTypeInstrumentationHandler implements ClassInstrumentationHandler {
-    private static final Logger LOGGER = Logger.getLogger(SubTypeInstrumentationHandler.class.getName());
     protected final String superTypeName;
     private boolean enabled = true;
 
@@ -29,7 +29,7 @@ public abstract class SubTypeInstrumentationHandler implements ClassInstrumentat
             }
         } catch (NotFoundException | CannotCompileException | IOException e) {
             // Disable the handler for the remainder.
-            LOGGER.warning("Error instrumenting " + cc.getName() + ": " + e.toString() + " [" + getClass().getName() + "]");
+            log.error("Error instrumenting " + cc.getName() + ": " + e.toString() + " [" + getClass().getName() + "]");
             enabled = false;
         }
 

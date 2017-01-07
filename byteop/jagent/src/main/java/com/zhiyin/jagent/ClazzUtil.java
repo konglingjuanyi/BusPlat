@@ -1,9 +1,13 @@
 package com.zhiyin.jagent;
 
+import com.google.common.collect.Lists;
 import javassist.CtBehavior;
 import javassist.CtClass;
 import javassist.CtMethod;
 import javassist.Modifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by wangqinghui on 2016/12/8.
@@ -11,6 +15,10 @@ import javassist.Modifier;
 public class ClazzUtil {
 
 //    public static boolean methodMatch
+
+
+
+
 
 
     public static boolean methodForbidModify(CtBehavior ctMethod) {
@@ -54,8 +62,17 @@ public class ClazzUtil {
 
     public static boolean classCouldModify(String className) {
 
-        if (className.startsWith("com/zhiyin") || className.startsWith("com.zhiyin")) {
-            return true;
+//        if(className.startsWith("com/zhiyin/jagent") || className.startsWith("com.zhiyin.jagent")){
+//            return false;
+//        }
+//        if (className.startsWith("com/zhiyin") || className.startsWith("com.zhiyin")) {
+//            return true;
+//        }
+        for (String excludePackage : AgentConfig.ExcludePackages) {
+            if( className.startsWith(excludePackage) ||  className.replace(".","/").startsWith(excludePackage) ){
+                return false;
+            }
+
         }
 
         return false;
@@ -64,6 +81,7 @@ public class ClazzUtil {
     public static boolean classForbidModify(String className) {
         return !classCouldModify(className);
     }
+
     public static boolean classForbidModify(CtClass ctClass) {
         return  !classCouldModify(ctClass);
     }
@@ -72,6 +90,10 @@ public class ClazzUtil {
         String clazz= "java.lang.Long";
         System.out.println(classCouldModify( clazz ));
         System.out.println(classForbidModify( clazz ));
+
+
+        System.out.println(AgentConfig.ExcludePackages);
+        System.out.println(classCouldModify(""));
 
     }
 }

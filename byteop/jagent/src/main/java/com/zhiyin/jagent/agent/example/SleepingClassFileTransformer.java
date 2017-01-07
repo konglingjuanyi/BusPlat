@@ -4,16 +4,19 @@ import com.zhiyin.jagent.ClazzUtil;
 import javassist.*;
 import javassist.expr.ExprEditor;
 import javassist.expr.MethodCall;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
+@Slf4j
 public class SleepingClassFileTransformer implements ClassFileTransformer {
 
     public byte[] transform(ClassLoader loader, String className, Class classBeingRedefined,
                             ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
 
+        log.info("SleepingClassFileTransformer");
         byte[] byteCode = classfileBuffer;
         CtClass cc = null;
         try {
@@ -24,7 +27,9 @@ public class SleepingClassFileTransformer implements ClassFileTransformer {
             if (ClazzUtil.classForbidModify(cc)) {
                 return classfileBuffer;
             }
-//            System.out.println("pass" + cc.getName());
+
+            System.out.println(cc.getName());
+            log.info("process class {}",cc.getName());
             CtBehavior[] methods = cc.getDeclaredBehaviors();
             for (int i = 0; i < methods.length; i++) {
                 if (ClazzUtil.methodCouldModify(methods[i])) {
@@ -36,6 +41,7 @@ public class SleepingClassFileTransformer implements ClassFileTransformer {
 
         } catch (Exception ex) {
             ex.printStackTrace();
+            log.error("transformer",ex);
         } finally {
             if (cc != null) {
                 cc.detach();
