@@ -9,7 +9,7 @@ package pid;
     import java.util.HashSet;
     import java.util.Set;
 
-    import com.zhiyin.test.runner.DemoServer;
+    import com.zhiyin.jagent.test.runner.DemoServer;
     import sun.jvmstat.monitor.MonitorException;
     import sun.jvmstat.monitor.MonitoredHost;
     import sun.jvmstat.monitor.MonitoredVm;

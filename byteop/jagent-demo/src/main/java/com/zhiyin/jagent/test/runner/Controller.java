@@ -1,4 +1,4 @@
-package com.zhiyin.test.runner;
+package com.zhiyin.jagent.test.runner;
 
 public class Controller   {
 

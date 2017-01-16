@@ -68,28 +68,30 @@ public class ClazzUtil {
 //        if (className.startsWith("com/zhiyin") || className.startsWith("com.zhiyin")) {
 //            return true;
 //        }
+
+        // 白名单策略
+        if( AgentConfig.PackageStrategy.equals( AgentConfig.PackageStrategyWhite) ){
+            for (String tmp : AgentConfig.IncludePackages) {
+                if( className.startsWith(tmp) ||  className.replace(".","/").startsWith(tmp) ){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // 默认黑名单
         for (String excludePackage : AgentConfig.ExcludePackages) {
             if( className.startsWith(excludePackage) ||  className.replace(".","/").startsWith(excludePackage) ){
                 return false;
             }
-
         }
-
-        return false;
-    }
-
-    public static boolean classForbidModify(String className) {
-        return !classCouldModify(className);
-    }
-
-    public static boolean classForbidModify(CtClass ctClass) {
-        return  !classCouldModify(ctClass);
+        return true;
     }
 
     public static void main(String[] args) {
         String clazz= "java.lang.Long";
         System.out.println(classCouldModify( clazz ));
-        System.out.println(classForbidModify( clazz ));
+
 
 
         System.out.println(AgentConfig.ExcludePackages);

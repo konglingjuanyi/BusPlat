@@ -11,12 +11,11 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
 @Slf4j
-public class SleepingClassFileTransformer implements ClassFileTransformer {
+public class MethodTimeConsumeTransformer implements ClassFileTransformer {
 
     public byte[] transform(ClassLoader loader, String className, Class classBeingRedefined,
                             ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
 
-        log.info("SleepingClassFileTransformer");
         byte[] byteCode = classfileBuffer;
         CtClass cc = null;
         try {
@@ -24,16 +23,20 @@ public class SleepingClassFileTransformer implements ClassFileTransformer {
             cc = ClassPool.getDefault().makeClass(new java.io.ByteArrayInputStream(
                     classfileBuffer));
 
-            if (ClazzUtil.classForbidModify(cc)) {
+            if(!className.contains("zhiyin")){
+                return null ;
+            }
+            System.out.println(className);
+
+//            cc = ClassPool.getDefault().get("com.zhiyin.jagent.test.PremainAgentTest");
+            if(!ClazzUtil.classCouldModify(cc)){
                 return classfileBuffer;
             }
-
-            System.out.println(cc.getName());
             log.info("process class {}",cc.getName());
             CtBehavior[] methods = cc.getDeclaredBehaviors();
             for (int i = 0; i < methods.length; i++) {
                 if (ClazzUtil.methodCouldModify(methods[i])) {
-//                    System.out.println("modify" + methods[i].getName());
+                    log.info("process method {}",methods[i].getName());
                     doMethod2(methods[i]);
                 }
             }
@@ -45,6 +48,7 @@ public class SleepingClassFileTransformer implements ClassFileTransformer {
         } finally {
             if (cc != null) {
                 cc.detach();
+//                cc.defrost();
             }
         }
 

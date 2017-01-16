@@ -17,6 +17,7 @@ import java.util.Set;
 
 @Slf4j
 public class TelemetryTransformer implements ClassFileTransformer {
+
     private final Set<ClassInstrumentationHandler> handlers = new HashSet<>();
 
     public void setHandlers( List<String> handlersStr) {
@@ -30,11 +31,10 @@ public class TelemetryTransformer implements ClassFileTransformer {
                 continue;
             }
             handlers.add(clasz);
-            log.info("add transformer, class name: {}",clasz.getClass().getName());
+            log.info("add transformer: {}",clasz.getClass().getName());
         }
 
     }
-
 
     public void addHandler(ClassInstrumentationHandler handler) {
         handlers.add(handler);
@@ -71,16 +71,18 @@ public class TelemetryTransformer implements ClassFileTransformer {
 
             boolean classUpdated = false;
             for (ClassInstrumentationHandler handler : handlers) {
-                if (classUpdated = handler.transformed(cc, cp)) {
-                    break;
-                }
+//                if (classUpdated = handler.transformed(cc, cp)) {
+//                    break;
+//                }
+                handler.transformed(cc, cp);
             }
+            return cc.toBytecode();
 
-            if (classUpdated) {
-                return cc.toBytecode();
-            } else {
-                return null;
-            }
+//            if (classUpdated) {
+//                return cc.toBytecode();
+//            } else {
+//                return null;
+//            }
         } catch (Exception e) {
             e.printStackTrace();
             return null;

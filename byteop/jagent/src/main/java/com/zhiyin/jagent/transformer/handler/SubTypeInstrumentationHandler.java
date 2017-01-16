@@ -25,6 +25,7 @@ public abstract class SubTypeInstrumentationHandler implements ClassInstrumentat
     public final boolean transformed(CtClass cc, ClassPool pool) {
         try {
             if (canTransform(cc, pool)) {
+//                log.info("start transform {}",);
                 return transform(cc, pool);
             }
         } catch (NotFoundException | CannotCompileException | IOException e) {
@@ -36,7 +37,7 @@ public abstract class SubTypeInstrumentationHandler implements ClassInstrumentat
         return false;
     }
 
-    private boolean canTransform(CtClass cc, ClassPool pool) throws NotFoundException {
+    public boolean canTransform(CtClass cc, ClassPool pool) throws NotFoundException {
         return isEnabled() && cc.subtypeOf(pool.get(superTypeName));
     }
 

@@ -1,4 +1,4 @@
-package com.zhiyin.test.runner;
+package com.zhiyin.jagent.test.runner;
 
 /**
  * Created by wangqinghui on 2016/12/8.

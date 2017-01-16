@@ -4,7 +4,7 @@ import com.alibaba.ttl.threadpool.agent.TtlTransformer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.common.base.Strings;
-import com.zhiyin.jagent.agent.example.SleepingClassFileTransformer;
+import com.zhiyin.jagent.agent.example.MethodTimeConsumeTransformer;
 import com.zhiyin.jagent.transformer.TelemetryTransformer;
 import com.zhiyin.jagent.transformer.handler.config.TelemetryConfiguration;
 import javassist.CannotCompileException;
@@ -19,16 +19,18 @@ import java.util.logging.Logger;
 @Slf4j
 public class AgentInstaller {
 
-//	Logger log = Logger.getLogger()
-
     public static String prefix = "jagent info, ";
 
 	public static void premain(String agentArguments,
 			Instrumentation instrumentation) {
 
+        agentArguments = "-packageStrategy white -includePackage com.zhiyin.jagent.test";
+        log.info("premain args:{}",agentArguments);
+
         AgentCommandBean commandBean = parseParam(agentArguments);
+        initSys(commandBean);
 		System.out.println("process was attached by premain");
-		doIns(instrumentation,commandBean);
+		doIns(instrumentation);
 	}
 
 	public static void agentmain(String args, Instrumentation instrumentation) throws CannotCompileException {
@@ -36,19 +38,22 @@ public class AgentInstaller {
 //		if (args == null || args.isEmpty()) {
 //			System.err.println(AgentConfig.AGENT_NAME_NOT_PROVIDED);
 //		}
+        System.out.println("agentmain arg:"+args);
 
 		log.info("process was attached by agentmain:" + AgentInstaller.class.getName());
         AgentCommandBean commandBean = parseParam(args);
-
-		doIns(instrumentation, commandBean);
+        initSys(commandBean);
+		doIns(instrumentation);
 	}
 
-	public static void doIns(Instrumentation instrumentation, AgentCommandBean commandBean){
+	public static void doIns(Instrumentation instrumentation ){
 
-        AgentConfig.addExcludePackage( commandBean.getExcludePackages());
-		handlerTrans(instrumentation);
+        ClassTransformerSupport.addCode(instrumentation);
 
-		instrumentation.addTransformer(new TtlTransformer());
+        instrumentation.addTransformer(new MethodTimeConsumeTransformer() );
+
+//		handlerTrans(instrumentation);
+        instrumentation.addTransformer(new TtlTransformer());
         System.out.println(prefix + "add " + TtlTransformer.class.getName());
 //        instrumentation.addTransformer(new ClassPathTransformer());
 //		instrumentation.addTransformer(new SleepingClassFileTransformer());
@@ -78,10 +83,10 @@ public class AgentInstaller {
             final TelemetryTransformer transformer = new TelemetryTransformer();
             transformer.setHandlers( config.getHandlers() );
 
-            instrumentation.addTransformer(transformer);
+            instrumentation.addTransformer(transformer,true);
 		}catch (Exception e){
-			System.out.println("handler error.");
-            System.out.println(e);
+			System.err.println("handler error.");
+            System.err.println(e);
         }
 
 	}
@@ -105,6 +110,17 @@ public class AgentInstaller {
             parser.printUsage(System.err);
         }
         return bean;
+    }
+
+    public static void initSys(AgentCommandBean bean){
+
+        AgentConfig.addExcludePackage( bean.getExcludePackages());
+
+        AgentConfig.addIncludePackage( bean.getIncludePackages());
+        AgentConfig.PackageStrategy = bean.getPackageStrategy();
+
+        log.info("agent command:{}",bean.toString());
+
     }
 
 }

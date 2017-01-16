@@ -10,7 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Created by wangqinghui on 2017/1/6.
+ * Created by hg on 2017/1/6.
+ * http://blog.sina.com.cn/s/blog_72ef7bea0102vvmg.html
  */
 public class AgentConfTest {
 

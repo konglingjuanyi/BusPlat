@@ -10,6 +10,7 @@ import java.io.InputStream;
 
 @Slf4j
 public class LogbackTraceLoggerHandler extends SubTypeInstrumentationHandler {
+
     public static String LogbackLogger = "ch.qos.logback.classic.Logger";
     public static String methodName= "buildLoggingEventAndAppend";
     public LogbackTraceLoggerHandler() {

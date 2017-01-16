@@ -21,6 +21,7 @@
     </properties>
 
     <modules>
+        <module>byteop-core</module>
         <module>byte_buddy_examples</module>
         <module>jagent</module>
         <module>jagent-demo</module>
